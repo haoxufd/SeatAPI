@@ -68,7 +68,7 @@ public class SeatAPI {
     }
     public static void apiReserveSeat() {
         try {
-            // API: 查看18-21点所有教室所有座位的可用情况
+            // API: 预定座位
             request = new Request.Builder()
                     .url("http://127.0.0.1:5000/seat/reserve/JB201_0/18-20")
                     .build();
@@ -88,7 +88,7 @@ public class SeatAPI {
     }
     public static void apiRegister() {
         try {
-            // API: 查看18-21点所有教室所有座位的可用情况
+            // API: 注册用户
             requestBody = new FormBody.Builder()
                     .add("Username", "test_user")
                     .add("Password", "123456")
@@ -111,8 +111,33 @@ public class SeatAPI {
             e.printStackTrace();
         }
     }
+    public static void apiLogin() {
+        try {
+            // API: 登录用户
+            requestBody = new FormBody.Builder()
+                    .add("Username", "test_user")
+                    .add("Password", "123456")
+                    .build();
+            request = new Request.Builder()
+                    .url("http://127.0.0.1:5000/login")
+                    .post(requestBody)
+                    .build();
+            response = client.newCall(request).execute();
+            jsonString = response.body().string();
+            // 返回的结果是json格式的字符串, 需要进行解析
+            Map<String, Object> map = mapper.readValue(jsonString, Map.class);
+            // 解析完成后, map中包含两条Entry, 每一条Entry是一个键值对(k, v)
+            // 第一条Entry是("Result", Boolean), 表示是否注册成功
+            // 第二条Entry是("Description", String), 表示对成功/失败结果的解释
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
-        apiRegister();
+        apiLogin();
     }
 }
