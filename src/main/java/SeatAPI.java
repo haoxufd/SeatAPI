@@ -16,7 +16,7 @@ public class SeatAPI {
         try {
             // API: 查看JB201教室在18-21点的每个座位的可用情况
             request = new Request.Builder()
-                    .url("http://127.0.0.1:5000/seat/status/JB201/18-21")
+                    .url("http://175.27.138.61/seat/status/JB201/18-21")
                     .build();
             response = client.newCall(request).execute();
             jsonString = response.body().string();
@@ -41,7 +41,7 @@ public class SeatAPI {
         try {
             // API: 查看18-21点所有教室所有座位的可用情况
             request = new Request.Builder()
-                    .url("http://127.0.0.1:5000/seat/status/18-21")
+                    .url("http://175.27.138.61/seat/status/18-21")
                     .build();
             response = client.newCall(request).execute();
             jsonString = response.body().string();
@@ -70,7 +70,7 @@ public class SeatAPI {
         try {
             // API: 预定座位
             request = new Request.Builder()
-                    .url("http://127.0.0.1:5000/seat/reserve/JB201_0/18-20")
+                    .url("http://175.27.138.61/seat/reserve/JB201_0/18-20")
                     .build();
             response = client.newCall(request).execute();
             jsonString = response.body().string();
@@ -92,9 +92,10 @@ public class SeatAPI {
             requestBody = new FormBody.Builder()
                     .add("Username", "test_user")
                     .add("Password", "123456")
+                    .add("IsAdmin", "False")
                     .build();
             request = new Request.Builder()
-                    .url("http://127.0.0.1:5000/register")
+                    .url("http://175.27.138.61/register")
                     .post(requestBody)
                     .build();
             response = client.newCall(request).execute();
@@ -119,7 +120,7 @@ public class SeatAPI {
                     .add("Password", "123456")
                     .build();
             request = new Request.Builder()
-                    .url("http://127.0.0.1:5000/login")
+                    .url("http://175.27.138.61/login")
                     .post(requestBody)
                     .build();
             response = client.newCall(request).execute();
